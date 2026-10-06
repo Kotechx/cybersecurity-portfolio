@@ -1,0 +1,8 @@
+# Never commit installers, disk images, secrets or license files
+*.deb
+*.iso
+*.vdi
+*.pem
+*.key
+.env
+*.lic

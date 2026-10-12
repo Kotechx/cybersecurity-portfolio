@@ -58,3 +58,4 @@ These events are installation and admin activity, not attacks. Attack runs are c
 | splunk-instalado | splunk-siem: Splunk installed, starts on boot |
 | splunk-indices-9997 | splunk-siem: Splunk with 3 indexes and receiving port 9997 |
 | linux-target-base | linux-target: Ubuntu 24.04, IP 192.168.56.20, 1 GB RAM, SSH ok, updated (2 packages deferred by phasing) |
+| linux-target-uf | linux-target: Universal Forwarder installed, starts on boot, sends auth.log to index linux |

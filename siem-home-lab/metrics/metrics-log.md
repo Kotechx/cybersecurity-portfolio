@@ -13,15 +13,26 @@ Only real, measured values go here, each with a date. Zeros stay as zeros until 
 | Receiving port | 9997 listening | 2026-10-06 |
 | splunk-siem VM | 4 GB RAM, 2 vCPU, 40 GB disk | 2026-10-06 |
 | linux-target VM | 1 GB RAM, 1 vCPU, 15 GB disk, static IP 192.168.56.20 | 2026-10-12 |
+| Universal Forwarder on linux-target | 10.6.0.5, runs as splunkfwd, starts on boot, sends /var/log/auth.log to index linux | 2026-10-12 |
 
-## Memory baseline (idle, before any agent or data)
+## Memory baseline
 
 | Metric | Value | Date |
 |---|---|---|
-| splunk-siem used (Splunk idle, no data ingested) | 1.1 GB | 2026-10-06 |
-| splunk-siem available | 2.7 GB | 2026-10-06 |
-| linux-target used (1 GB RAM, before Universal Forwarder) | 320 Mi | 2026-10-12 |
-| linux-target available (same condition) | 640 Mi | 2026-10-12 |
+| splunk-siem used / available (Splunk idle, no data ingested) | 1.1 GB / 2.7 GB | 2026-10-06 |
+| linux-target used / available (1 GB RAM, before Universal Forwarder) | 320 Mi / 640 Mi | 2026-10-12 |
+| linux-target used / available (Universal Forwarder installed, stopped) | 339 Mi / 621 Mi | 2026-10-12 |
+| linux-target used / available (Universal Forwarder running, after reboot) | 361 Mi / 600 Mi | 2026-10-12 |
+
+Measured at different moments, so the comparison is approximate.
+
+## Ingestion baseline (normal VM activity, before any attack)
+
+| Metric | Value | Date |
+|---|---|---|
+| auth.log events indexed in index=linux (host linux-target, sourcetype linux_secure) | 93 | 2026-10-12 |
+
+These events are installation and admin activity, not attacks. Attack runs are counted from a recorded start time.
 
 ## Detection results
 

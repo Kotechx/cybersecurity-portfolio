@@ -30,7 +30,7 @@ Only real, measured values go here, each with a date. Zeros stay as zeros until 
 |kali-attacker used / available (2 GB RAM, idle, before any attack)|675 Mi / 1.3 Gi|2026-10-14|
 |windows-target used / available (4 GB RAM, idle, Sysmon + Universal Forwarder running)|2.27 GB / 1.73 GB|2026-10-24|
 
-Measured at different moments, so the comparison is approximate. 
+Measured at different moments, so the comparison is approximate.
 
 Note: the windows-target measurement was taken with Sysmon and the Universal Forwarder already running — unlike the other VMs, there was no "before agent" baseline captured for this host.
 
@@ -55,12 +55,6 @@ These events are installation and admin activity, not attacks. Attack runs are c
 |Attack events generated (scenario 2)|1 process chain: powershell.exe -> cmd.exe -> systeminfo.exe (Atomic Red Team T1082-1, windows-target, 2026-10-22)|
 |Attack events detected (scenario 2)|Full process chain captured (2 of 2 relevant events: cmd.exe and systeminfo.exe)|
 |Tooling failures documented|RDP brute force: ncrack (handshake timeout) and Hydra (freerdp connection failure) both failed against windows-target, even with NLA disabled|
-
-## Daily ingestion (License page, "Volume used today")
-
-|Date|MB used|Warning count|Notes|
-|-|-|-|-|
-|||||
 
 ## Snapshots (timeline)
 

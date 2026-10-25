@@ -79,7 +79,13 @@ TODO: results after more attack simulations, with evidence.
 
 ## Skills Demonstrated
 
-TODO at the end of the project. Each skill links to the evidence in this repository (a rule, a screenshot, a metric). Skills without evidence are left out.
+- **SIEM deployment and administration** — installed and configured Splunk Enterprise from scratch, including index design, boot-start persistence, and license management ([README](#lab-architecture), [metrics-log.md](metrics/metrics-log.md))
+- **Log forwarding and agent management** — deployed and troubleshot Splunk Universal Forwarder on both Linux and Windows, resolving permission errors on each platform ([troubleshooting.md](troubleshooting.md))
+- **Detection engineering** — wrote, tested, and tuned two SPL detection rules mapped to MITRE ATT&CK, with documented thresholds and false-positive analysis ([detections/](detections/))
+- **Adversary simulation** — ran SSH brute-force attacks with Hydra and executed MITRE ATT&CK techniques with Atomic Red Team against my own isolated targets ([scenarios/](scenarios/))
+- **Network segmentation** — designed an isolated host-only lab network separate from NAT internet access, documented in the [architecture diagram](diagrams/architecture.svg)
+- **Technical documentation** — maintained a troubleshooting log, metrics log, and attack/detection write-ups throughout the project, with every number traceable to a real measurement
+- **Version control** — managed the full project history in Git/GitHub, including incremental commits per milestone
 
 ## Screenshots
 
@@ -92,7 +98,12 @@ TODO: dashboard in `screenshots/`.
 
 ## What I Learned
 
-TODO
+- **Linux troubleshooting under pressure.** The Day 1 Ubuntu install left me with no user account and no network config. Working through GRUB recovery mode, manual netplan configuration, and a broken apt source taught me more about how Linux boots and configures itself than a clean install ever would have.
+- **Permissions are rarely obvious, but always traceable.** Two separate access-denied problems (the Universal Forwarder on Linux needing the `adm` group to read `auth.log`, and the Windows Universal Forwarder needing `Event Log Readers` to read the Sysmon channel) taught me to read the actual error code instead of guessing, and to check group membership before anything else.
+- **Time zones break SPL silently.** I lost time twice to the same mistake: writing absolute-time searches that Splunk interpreted in my local timezone instead of UTC, so the dashboard panels came back empty even though the data was there. Relative time (`earliest=-Nm`) avoided the problem entirely.
+- **A failed attack is still a finding.** RDP brute force against my own Windows target failed with both ncrack and Hydra, even with NLA disabled. Instead of treating that as a dead end, I documented it as a detection/tooling gap and pivoted to Atomic Red Team, which ended up producing a cleaner, more realistic detection (T1082 via the full Sysmon process chain).
+- **Detection engineering is iterative.** Writing the SSH brute-force rule meant reconstructing two separate Hydra runs from raw `auth.log` timestamps, picking a bucket span that would actually group the bursts together, and validating the threshold against real attack data instead of a number I assumed would work.
+- **Infrastructure hygiene matters before day one of security work.** Keeping the Git repo and the VirtualBox VMs outside of OneDrive, separating a dedicated attacker VM from my personal Kali instance, and never committing installers or license files were small decisions that would have caused real problems later if skipped.
 
 ## Future Improvements
 

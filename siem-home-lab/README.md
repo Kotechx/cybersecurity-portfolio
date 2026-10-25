@@ -1,27 +1,27 @@
 # Home SOC Lab: Splunk SIEM Detection Engineering
 
-SOC Analyst Portfolio · Splunk Enterprise · Sysmon · MITRE ATT&CK
+SOC Analyst Portfolio · Splunk Enterprise · Sysmon · MITRE ATT\&CK
 
-Building an isolated home lab to practice core SOC analyst skills: log monitoring, alert triage and detection engineering. Splunk Enterprise is the SIEM; Windows and Linux endpoints send logs to it, I simulate attacks from Kali Linux and locally via Atomic Red Team, and I write my own detection rules mapped to MITRE ATT&CK.
+Building an isolated home lab to practice core SOC analyst skills: log monitoring, alert triage and detection engineering. Splunk Enterprise is the SIEM; Windows and Linux endpoints send logs to it, I simulate attacks from Kali Linux and locally via Atomic Red Team, and I write my own detection rules mapped to MITRE ATT\&CK.
 
 **Status:** 4 of 4 hosts built · 2 attack scenarios documented · 2 detection rules written · Lab period: October 2026 to present
 
-_Numbers above are updated only from [metrics/metrics-log.md](metrics/metrics-log.md). Sections marked TODO are filled in as each piece is built and tested._
+*Numbers above are updated only from* [*metrics/metrics-log.md*](metrics/metrics-log.md)*. Sections marked TODO are filled in as each piece is built and tested.*
 
 ## Lab Architecture
 
-| Host | Role | OS | IP (host-only) | Status |
-|---|---|---|---|---|
-| splunk-siem | SIEM (Splunk Enterprise) | Ubuntu Server 24.04.5 LTS | 192.168.56.10 | Built |
-| linux-target | Monitored endpoint (SSH target), Universal Forwarder | Ubuntu Server 24.04 LTS | 192.168.56.20 | Built |
-| windows-target | Monitored endpoint, Sysmon + Universal Forwarder | Windows 10 Enterprise Evaluation | 192.168.56.30 | Built |
-| kali-attacker | Attacker platform | Kali Linux 2026.2 | 192.168.56.50 | Built |
+|Host|Role|OS|IP (host-only)|Status|
+|-|-|-|-|-|
+|splunk-siem|SIEM (Splunk Enterprise)|Ubuntu Server 24.04.5 LTS|192.168.56.10|Built|
+|linux-target|Monitored endpoint (SSH target), Universal Forwarder|Ubuntu Server 24.04 LTS|192.168.56.20|Built|
+|windows-target|Monitored endpoint, Sysmon + Universal Forwarder|Windows 10 Enterprise Evaluation|192.168.56.30|Built|
+|kali-attacker|Attacker platform|Kali Linux 2026.2|192.168.56.50|Built|
 
 Data flow:
 
-`[kali-attacker] -- attacks --> [linux-target / windows-target + Universal Forwarder] -- logs, port 9997 --> [splunk-siem] -- searches, alerts, dashboard`
+`\\\\\\\[kali-attacker] -- attacks --> \\\\\\\[linux-target / windows-target + Universal Forwarder] -- logs, port 9997 --> \\\\\\\[splunk-siem] -- searches, alerts, dashboard`
 
-TODO: diagram in `diagrams/`.
+!\[Lab architecture diagram](diagrams/architecture.svg)
 
 All hosts run in VirtualBox on a Windows 11 host. Lab traffic stays on an isolated **host-only** network. Each VM also has a NAT adapter, used for package installs and tool downloads. TODO: state whether the NAT adapter is disabled on target VMs during attack runs.
 
@@ -29,45 +29,45 @@ All hosts run in VirtualBox on a Windows 11 host. Lab traffic stays on an isolat
 
 ## Tools Stack
 
-| Tool | Version | Purpose |
-|---|---|---|
-| Splunk Enterprise | 10.6.0.5 (60-day trial, 500 MB/day) | SIEM: log collection, search, alerting |
-| Splunk Universal Forwarder (Linux) | 10.6.0.5 | Log shipping from linux-target |
-| Splunk Universal Forwarder (Windows) | 10.6.1.1 | Log shipping from windows-target (Security + Sysmon channels) |
-| Ubuntu Server | 24.04.5 LTS | splunk-siem and linux-target (version listed as supported in Splunk's system requirements) |
-| Windows 10 Enterprise | Evaluation (90-day) | windows-target endpoint |
-| Sysmon | v15.22, SwiftOnSecurity config (schema 4.91) | Windows endpoint telemetry (process creation, network, etc.) |
-| Oracle VirtualBox | 7.2.16 r174877 | Virtualization on a Windows 11 host |
-| Kali Linux | 2026.2 | Attack simulation platform |
-| Hydra | v9.7 | SSH brute-force simulation; attempted (unsuccessfully) for RDP |
-| ncrack | (preinstalled on Kali) | Attempted (unsuccessfully) for RDP brute force |
-| Invoke-AtomicRedTeam | Latest (master branch) | Local execution of MITRE ATT&CK atomic tests on windows-target |
+|Tool|Version|Purpose|
+|-|-|-|
+|Splunk Enterprise|10.6.0.5 (60-day trial, 500 MB/day)|SIEM: log collection, search, alerting|
+|Splunk Universal Forwarder (Linux)|10.6.0.5|Log shipping from linux-target|
+|Splunk Universal Forwarder (Windows)|10.6.1.1|Log shipping from windows-target (Security + Sysmon channels)|
+|Ubuntu Server|24.04.5 LTS|splunk-siem and linux-target (version listed as supported in Splunk's system requirements)|
+|Windows 10 Enterprise|Evaluation (90-day)|windows-target endpoint|
+|Sysmon|v15.22, SwiftOnSecurity config (schema 4.91)|Windows endpoint telemetry (process creation, network, etc.)|
+|Oracle VirtualBox|7.2.16 r174877|Virtualization on a Windows 11 host|
+|Kali Linux|2026.2|Attack simulation platform|
+|Hydra|v9.7|SSH brute-force simulation; attempted (unsuccessfully) for RDP|
+|ncrack|(preinstalled on Kali)|Attempted (unsuccessfully) for RDP brute force|
+|Invoke-AtomicRedTeam|Latest (master branch)|Local execution of MITRE ATT\&CK atomic tests on windows-target|
 
 ## Data Source
 
 Splunk indexes: `linux`, `windows`, `sysmon`. Receiving port `9997` is open for Universal Forwarders.
 
-- linux-target forwards `/var/log/auth.log` (sourcetype `linux_secure`) to index `linux`
-- windows-target forwards the **Security** event log to index `windows` (sourcetype `WinEventLog:Security`) and the **Sysmon operational log** to index `sysmon` (sourcetype `WinEventLog:Microsoft-Windows-Sysmon/Operational`)
+* linux-target forwards `/var/log/auth.log` (sourcetype `linux\\\\\\\_secure`) to index `linux`
+* windows-target forwards the **Security** event log to index `windows` (sourcetype `WinEventLog:Security`) and the **Sysmon operational log** to index `sysmon` (sourcetype `WinEventLog:Microsoft-Windows-Sysmon/Operational`)
 
 ## Attack Scenarios
 
-One write-up per scenario in [scenarios/](scenarios/) (template: [scenarios/_template.md](scenarios/_template.md)).
+One write-up per scenario in [scenarios/](scenarios/) (template: [scenarios/\_template.md](scenarios/_template.md)).
 
-| # | Scenario | MITRE ATT&CK | Detected? | Status |
-|---|---|---|---|---|
-| 1 | [SSH brute force against linux-target](scenarios/ssh-brute-force.md) | T1110.001 | Yes (6/6 failed attempts detected) | Done |
-| 2 | [System Information Discovery via Atomic Red Team](scenarios/t1082-system-info-discovery.md) | T1082 | Yes (full process chain captured) | Done |
-| 3 | TODO | | | Planned |
+|#|Scenario|MITRE ATT\&CK|Detected?|Status|
+|-|-|-|-|-|
+|1|[SSH brute force against linux-target](scenarios/ssh-brute-force.md)|T1110.001|Yes (6/6 failed attempts detected)|Done|
+|2|[System Information Discovery via Atomic Red Team](scenarios/t1082-system-info-discovery.md)|T1082|Yes (full process chain captured)|Done|
+|3|TODO|||Planned|
 
 ## Detection Engineering
 
-One file per rule in [detections/](detections/) (template: [detections/_template.md](detections/_template.md)).
+One file per rule in [detections/](detections/) (template: [detections/\_template.md](detections/_template.md)).
 
-| Rule | ATT&CK technique | Data source | Validated against | Status |
-|---|---|---|---|---|
-| [SSH Brute Force - Multiple Failed Logins](detections/ssh-brute-force-t1110.md) | T1110.001 | index=linux, sourcetype=linux_secure | Scenario 1 (Hydra, 6 failed logins) | Done, saved as scheduled Splunk alert |
-| [T1082 - System Information Discovery](detections/t1082-system-info-discovery.md) | T1082 | index=sysmon, EventCode=1 | Scenario 2 (Atomic Red Team T1082-1) | Done, saved as scheduled Splunk alert |
+|Rule|ATT\&CK technique|Data source|Validated against|Status|
+|-|-|-|-|-|
+|[SSH Brute Force - Multiple Failed Logins](detections/ssh-brute-force-t1110.md)|T1110.001|index=linux, sourcetype=linux\_secure|Scenario 1 (Hydra, 6 failed logins)|Done, saved as scheduled Splunk alert|
+|[T1082 - System Information Discovery](detections/t1082-system-info-discovery.md)|T1082|index=sysmon, EventCode=1|Scenario 2 (Atomic Red Team T1082-1)|Done, saved as scheduled Splunk alert|
 
 ## Key Findings
 
@@ -75,7 +75,7 @@ TODO: results after more attack simulations, with evidence.
 
 ### Detection gaps
 
-- **RDP brute force tooling failure:** both ncrack and Hydra (Kali's standard brute-force tools) failed to complete a brute-force attempt against windows-target's RDP service, even after disabling Network Level Authentication (NLA). ncrack's handshake timed out with 0 completed attempts; Hydra's RDP module (explicitly marked "experimental" by its own authors) failed to establish the connection via `freerdp`. This is a tooling limitation, not a detection gap on the defensive side — it meant I could not generate a real RDP brute-force dataset with these tools, so I pivoted to a locally-executed Atomic Red Team test instead. TODO: revisit with a different tool (e.g. a custom script, or Metasploit's RDP scanner) if time allows.
+* **RDP brute force tooling failure:** both ncrack and Hydra (Kali's standard brute-force tools) failed to complete a brute-force attempt against windows-target's RDP service, even after disabling Network Level Authentication (NLA). ncrack's handshake timed out with 0 completed attempts; Hydra's RDP module (explicitly marked "experimental" by its own authors) failed to establish the connection via `freerdp`. This is a tooling limitation, not a detection gap on the defensive side — it meant I could not generate a real RDP brute-force dataset with these tools, so I pivoted to a locally-executed Atomic Red Team test instead. TODO: revisit with a different tool (e.g. a custom script, or Metasploit's RDP scanner) if time allows.
 
 ## Skills Demonstrated
 
@@ -83,11 +83,12 @@ TODO at the end of the project. Each skill links to the evidence in this reposit
 
 ## Screenshots
 
-- [SSH brute force detected in Splunk](screenshots/ssh-brute-force-detection.png)
-- [T1082 System Information Discovery detected in Splunk](screenshots/t1082-detection.png)
-- [SOC Home Lab dashboard overview](screenshots/dashboard-overview.png)
+* [SSH brute force detected in Splunk](screenshots/ssh-brute-force-detection.png)
+* [T1082 System Information Discovery detected in Splunk](screenshots/t1082-detection.png)
 
-TODO: more evidence as new scenarios are added.
+
+
+TODO: dashboard in `screenshots/`.
 
 ## What I Learned
 
@@ -109,3 +110,4 @@ Planned only if time allows: Cowrie honeypot on an isolated VPS feeding the SIEM
 ├── configs/             # sanitized config snippets (no secrets)
 └── metrics/             # metrics-log.md
 ```
+

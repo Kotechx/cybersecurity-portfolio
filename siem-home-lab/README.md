@@ -58,7 +58,6 @@ One write-up per scenario in [scenarios/](scenarios/) (template: [scenarios/\_te
 |-|-|-|-|-|
 |1|[SSH brute force against linux-target](scenarios/ssh-brute-force.md)|T1110.001|Yes (6/6 failed attempts detected)|Done|
 |2|[System Information Discovery via Atomic Red Team](scenarios/t1082-system-info-discovery.md)|T1082|Yes (full process chain captured)|Done|
-|3|TODO|||Planned|
 
 ## Detection Engineering
 
@@ -71,7 +70,7 @@ One file per rule in [detections/](detections/) (template: [detections/\_templat
 
 ## Key Findings
 
-TODO: results after more attack simulations, with evidence.
+Both simulated attacks (SSH brute force and T1082 System Information Discovery) were fully detected by the custom SPL rules written for this lab, with no missed events. Windows Defender also quarantined several Atomic Red Team test binaries on first install (see [troubleshooting.md](troubleshooting.md)), confirming active endpoint protection on the Windows target — a secondary, unplanned validation of the environment's defenses. RDP brute force failed with two different tools (see Detection Gaps below); no conclusion should be drawn about RDP security from that result.
 
 ### Detection gaps
 

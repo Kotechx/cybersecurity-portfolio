@@ -111,7 +111,6 @@ Planned only if time allows: Cowrie honeypot on an isolated VPS feeding the SIEM
 
 ## Repository Structure
 
-```
 ├── README.md
 ├── troubleshooting.md   # problems hit and how I diagnosed them
 ├── diagrams/            # architecture diagrams
@@ -120,5 +119,9 @@ Planned only if time allows: Cowrie honeypot on an isolated VPS feeding the SIEM
 ├── detections/          # one SPL rule per file
 ├── configs/             # sanitized config snippets (no secrets)
 └── metrics/             # metrics-log.md
-```
 
+`configs/` — sanitized configuration files referenced throughout this write-up:
+- `01-lab.yaml` — netplan static IP config (linux-target)
+- `linux-forwarder-inputs.conf` / `linux-forwarder-outputs.conf` — Universal Forwarder config (linux-target)
+- `windows-forwarder-inputs.conf` / `windows-forwarder-outputs.conf` — Universal Forwarder config (windows-target)
+- `sysmon-config.xml` — Sysmon configuration (SwiftOnSecurity base, windows-target)

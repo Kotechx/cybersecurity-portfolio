@@ -24,7 +24,7 @@ All failed and successful attempts were for user `linux-target` from source IP `
 Because both bursts fell inside the same 5-minute bucket used by the detection rule, [detections/ssh-brute-force-t1110.md](../detections/ssh-brute-force-t1110.md) returned a single aggregated result: `failed_attempts=6` for `src_ip=192.168.56.50`, `ssh_user=linux-target`. All 6 failed attempts across both runs were captured by the rule.
 
 ## Evidence
-TODO: screenshot of the Splunk search results table (`_time`, `src_ip`, `ssh_user`, `failed_attempts`) in `../screenshots/`.
+Splunk search results table (`_time`, `src_ip`, `ssh_user`, `failed_attempts`) showing the single aggregated row (`failed_attempts=6`): [ssh-brute-force-detection.png](../screenshots/ssh-brute-force-detection.png).
 
 ## Takeaway
 - Forgetting to timestamp an attack run before executing it is recoverable: the raw log timestamps (`_time` in Splunk, down to the millisecond) let me reconstruct exactly when each burst happened, which attempts were failures versus a success, and which process ID (`sshd[NNNN]`) handled each connection.

@@ -28,7 +28,7 @@ powershell.exe
 All three processes were logged as Sysmon EventCode 1 (process creation) with full command lines and parent-child relationships intact, confirming that Sysmon's process-creation logging captures this kind of reconnaissance chain even when the final command (`systeminfo`) is wrapped inside intermediate shells.
 
 ## Evidence
-TODO: screenshot of the Splunk search results table (`_time`, `host`, `Image`, `CommandLine`, `ParentImage`, `ParentCommandLine`) in `../screenshots/`.
+Splunk search results table (`_time`, `host`, `Image`, `CommandLine`, `ParentImage`, `ParentCommandLine`) showing the `systeminfo.exe` and `cmd.exe` events: [t1082-detection.png](../screenshots/t1082-detection.png).
 
 ## Takeaway
 

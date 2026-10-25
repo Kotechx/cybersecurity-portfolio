@@ -19,7 +19,7 @@ Building an isolated home lab to practice core SOC analyst skills: log monitorin
 
 Data flow:
 
-`\\\\\\\[kali-attacker] -- attacks --> \\\\\\\[linux-target / windows-target + Universal Forwarder] -- logs, port 9997 --> \\\\\\\[splunk-siem] -- searches, alerts, dashboard`
+`kali-attacker -- attacks --> linux-target / windows-target (+ Universal Forwarder) -- logs, port 9997 --> splunk-siem -- searches, alerts, dashboard`
 
 !\[Lab architecture diagram](diagrams/architecture.svg)
 
@@ -94,7 +94,7 @@ TODO: results after more attack simulations, with evidence.
 
 
 
-TODO: dashboard in `screenshots/`.
+* [SOC Home Lab Overview dashboard](screenshots/dashboard-overview.png)
 
 ## What I Learned
 

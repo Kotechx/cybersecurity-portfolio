@@ -42,3 +42,11 @@ Problems hit while building the lab, how I diagnosed them, and what fixed them. 
 - **Cause:** consistent with socket activation on Ubuntu 24.04: `ssh.socket` listens on port 22 and starts `ssh.service` on the first incoming connection. I did not capture the service state before the first connection, so this is the most likely explanation, not a proven one
 - **Fix:** none needed. SSH was working as designed
 - **Lesson:** "inactive" does not always mean "down". Check the socket unit before restarting a service
+## Splunk bucket integrity warning (windows index)
+
+During dashboard testing, a search against index=windows returned: 
+"Failed to read ... Rawdata may be corrupt" for one bucket. 
+Results still returned complete (5325 events), so likely an isolated 
+bucket issue with no data loss so far. Monitoring for recurrence; 
+if search results come back incomplete in the future, this bucket 
+is the first suspect.

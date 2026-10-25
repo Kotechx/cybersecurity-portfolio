@@ -85,8 +85,9 @@ TODO at the end of the project. Each skill links to the evidence in this reposit
 
 - [SSH brute force detected in Splunk](screenshots/ssh-brute-force-detection.png)
 - [T1082 System Information Discovery detected in Splunk](screenshots/t1082-detection.png)
+- [SOC Home Lab dashboard overview](screenshots/dashboard-overview.png)
 
-TODO: dashboard in `screenshots/`.
+TODO: more evidence as new scenarios are added.
 
 ## What I Learned
 

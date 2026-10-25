@@ -23,7 +23,7 @@ Data flow:
 
 !\[Lab architecture diagram](diagrams/architecture.svg)
 
-All hosts run in VirtualBox on a Windows 11 host. Lab traffic stays on an isolated **host-only** network. Each VM also has a NAT adapter, used for package installs and tool downloads. TODO: state whether the NAT adapter is disabled on target VMs during attack runs.
+All hosts run in VirtualBox on a Windows 11 host. Lab traffic stays on an isolated **host-only** network. Each VM also has a NAT adapter, used for package installs and tool downloads. Both target VMs (linux-target, windows-target) retained their NAT adapter enabled throughout the attack simulations, alongside the host-only adapter. Attacks were conducted exclusively over the host-only network (192.168.56.0/24); the NAT adapter was not used as an attack path and remained enabled only for internet access (package installs, tool downloads).
 
 **Safety:** this is an isolated lab. Attacks are only ever run against machines I own, for training purposes.
 

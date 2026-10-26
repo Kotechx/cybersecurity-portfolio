@@ -47,7 +47,7 @@ All hosts run in VirtualBox on a Windows 11 host. Lab traffic stays on an isolat
 
 Splunk indexes: `linux`, `windows`, `sysmon`. Receiving port `9997` is open for Universal Forwarders.
 
-* linux-target forwards `/var/log/auth.log` (sourcetype `linux\\\\\\\_secure`) to index `linux`
+* linux-target forwards `/var/log/auth.log` (sourcetype `linux_secure`) to index `linux`
 * windows-target forwards the **Security** event log to index `windows` (sourcetype `WinEventLog:Security`) and the **Sysmon operational log** to index `sysmon` (sourcetype `WinEventLog:Microsoft-Windows-Sysmon/Operational`)
 
 ## Attack Scenarios

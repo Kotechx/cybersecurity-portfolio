@@ -12,6 +12,7 @@ notes; what's here is the reasoning and the defensive takeaway.
 
 | Room | Date | Skills | Write-up |
 |------|------|--------|----------|
+| Blue | 2026-11 | SMB exploitation, vulnerability validation, credential dumping, offline hash cracking | [read](./tryhackme/blue/README.md) |
 | Corridor | 2026-08 | Web, IDOR / broken access control | [read](./tryhackme/corridor/README.md) |
 | Hydra | 2026-11 | Brute force, HTTP form auth, SSH | [read](./tryhackme/hydra/README.md) |
 | RootMe | 2026-10 | Enumeration, file-upload bypass, reverse shell, SUID privesc | [read](./tryhackme/rootme/README.md) |
